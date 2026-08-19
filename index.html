@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Trung tâm mở khóa</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body{
+    min-height:100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #080b16,
+            #111936,
+            #071b24
+        );
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow-x:hidden;
+
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    width:92%;
+    max-width:430px;
+    padding:30px 0;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#9ca8c7;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+
+/* =========================
+   Ô MENU
+========================= */
+
+.box{
+    background:rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:18px;
+
+    padding:23px;
+
+    margin-bottom:15px;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        opacity .25s ease,
+        filter .25s ease,
+        box-shadow .25s ease;
+}
+
+.box:active{
+    transform:scale(.97);
+}
+
+.box.opening{
+    animation:
+        boxOpen
+        .55s
+        ease
+        forwards;
+
+    pointer-events:none;
+}
+
+@keyframes boxOpen{
+
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    45%{
+        transform:scale(1.08);
+        opacity:1;
+
+        box-shadow:
+            0 0 35px
+            rgba(0,217,255,.4);
+    }
+
+    100%{
+        transform:scale(1.35);
+        opacity:0;
+        filter:blur(8px);
+    }
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.box h2{
+    font-size:18px;
+    margin-bottom:6px;
+}
+
+.box p{
+    color:#9ca8c7;
+    font-size:13px;
+}
+
+
+/* =========================
+   TRANG CON
+========================= */
+
+.page{
+    display:none;
+
+    background:
+        rgba(10,15,30,.95);
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    border-radius:20px;
+
+    padding:24px;
+
+    opacity:0;
+    transform:scale(.85);
+}
+
+.page.show{
+    display:block;
+
+    animation:
+        pageShow
+        .35s
+        ease
+        forwards;
+}
+
+@keyframes pageShow{
+
+    0%{
+        opacity:0;
+        transform:scale(.85);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.page h2{
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.page p{
+    color:#9ca8c7;
+    font-size:14px;
+    margin-bottom:18px;
+}
+
+
+/* =========================
+   INPUT UID
+========================= */
+
+input{
+    width:100%;
+
+    padding:15px;
+
+    background:#0c1224;
+
+    color:white;
+
+    border:
+        1px solid
+        #293654;
+
+    border-radius:12px;
+
+    outline:none;
+
+    font-size:15px;
+
+    margin-bottom:12px;
+}
+
+input:focus{
+    border-color:#00d9ff;
+
+    box-shadow:
+        0 0 10px
+        rgba(0,217,255,.12);
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+    border:0;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+button:active{
+    transform:scale(.96);
+}
+
+
+/* =========================
+   XÁC NHẬN
+========================= */
+
+.confirm{
+    width:100%;
+
+    padding:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00c6ff,
+            #0072ff
+        );
+
+    color:white;
+}
+
+.confirm:hover{
+    box-shadow:
+        0 0 20px
+        rgba(0,198,255,.25);
+}
+
+
+/* =========================
+   ZALO
+========================= */
+
+.zalo{
+    width:100%;
+    padding:14px;
+    background:#0068ff;
+    color:white;
+}
+
+
+/* =========================
+   QUAY LẠI
+========================= */
+
+.back{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:12px;
+
+    background:transparent;
+
+    color:#9ca8c7;
+
+    border:
+        1px solid
+        #293654;
+}
+
+
+/* =========================
+   KẾT QUẢ UID
+========================= */
+
+.account-result{
+    display:none;
+
+    margin-top:18px;
+
+    animation:
+        resultShow
+        .35s
+        ease;
+}
+
+@keyframes resultShow{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(15px)
+            scale(.95);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================
+   KHUNG ẢNH
+========================= */
+
+.image-box{
+    width:100%;
+
+    aspect-ratio:16 / 9;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    background:#080d1b;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    margin-bottom:14px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+}
+
+.image-box img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    pointer-events:none;
+}
+
+
+/* =========================
+   XÁC NHẬN DƯỚI ẢNH
+========================= */
+
+.account-confirm{
+    width:100%;
+
+    padding:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00d084,
+            #00a86b
+        );
+
+    color:white;
+}
+
+.account-confirm:hover{
+    box-shadow:
+        0 0 20px
+        rgba(0,208,132,.25);
+}
+
+
+/* =========================
+   UID KHÔNG CÓ DỮ LIỆU
+========================= */
+
+.not-found{
+    display:none;
+
+    margin-top:18px;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,180,0,.07);
+
+    border:
+        1px solid
+        rgba(255,180,0,.25);
+
+    color:#ffd76a;
+
+    text-align:center;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    animation:
+        resultShow
+        .35s
+        ease;
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-bg{
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.65);
+
+    z-index:100;
+}
+
+.popup{
+    position:fixed;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:85%;
+
+    max-width:350px;
+
+    background:#10182d;
+
+    border:
+        1px solid
+        #00e0a0;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:center;
+
+    z-index:101;
+
+    animation:
+        popupShow
+        .25s
+        ease;
+}
+
+@keyframes popupShow{
+
+    from{
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.8);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+}
+
+.popup-icon{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.popup h3{
+    margin-bottom:8px;
+}
+
+.popup p{
+    color:#9ca8c7;
+    font-size:14px;
+    margin-bottom:18px;
+}
+
+.close{
+    width:100%;
+    padding:14px;
+    background:#00b889;
+    color:white;
+}
+
+
+/* ==================================================
+   LIÊN HỆ
+================================================== */
+
+.footer{
+    margin-top:30px;
+    text-align:left;
+}
+
+.contact-title{
+    color:#ffffff;
+
+    font-size:18px;
+    font-weight:700;
+
+    margin-bottom:14px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.contact-title::before{
+    content:"";
+
+    width:4px;
+    height:20px;
+
+    border-radius:10px;
+
+    background:#00c6ff;
+}
+
+.contact-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.contact-btn{
+    width:100% !important;
+    min-width:0;
+
+    padding:
+        13px
+        15px !important;
+
+    border-radius:
+        16px !important;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    text-align:left;
+
+    position:relative;
+    overflow:hidden;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.contact-btn::after{
+    content:"›";
+
+    position:absolute;
+    right:16px;
+
+    font-size:22px;
+    opacity:.55;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+.contact-btn:active{
+    transform:scale(.96);
+}
+
+.contact-btn:active::after{
+    transform:translateX(4px);
+    opacity:1;
+}
+
+
+/* ICON */
+
+.contact-icon{
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:19px;
+
+    flex-shrink:0;
+}
+
+
+/* NỘI DUNG */
+
+.contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.contact-name{
+    font-size:14px;
+    font-weight:700;
+}
+
+.contact-desc{
+    font-size:11px;
+    opacity:.55;
+}
+
+
+/* ZALO */
+
+.footer-zalo{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,104,255,.18),
+            rgba(0,104,255,.06)
+        );
+
+    border:
+        1px solid
+        rgba(0,130,255,.35);
+
+    color:#70adff;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,104,255,.08);
+}
+
+.footer-zalo .contact-icon{
+    background:
+        rgba(0,104,255,.18);
+}
+
+
+/* TIKTOK */
+
+.footer-tiktok{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.04)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    color:#ffffff;
+}
+
+.footer-tiktok .contact-icon{
+    background:
+        rgba(255,255,255,.10);
+}
+
+
+/* FACEBOOK */
+
+.footer-facebook{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(24,119,242,.18),
+            rgba(24,119,242,.05)
+        );
+
+    border:
+        1px solid
+        rgba(24,119,242,.35);
+
+    color:#69a9ff;
+}
+
+.footer-facebook .contact-icon{
+    background:
+        rgba(24,119,242,.18);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.made{
+    color:#687492;
+
+    font-size:11px;
+
+    margin-top:16px;
+
+    text-align:left;
+}
+
+.copyright{
+    color:#4e5a75;
+
+    font-size:10px;
+
+    margin-top:5px;
+
+    text-align:left;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:360px){
+
+    .title{
+        font-size:24px;
+    }
+
+    .box{
+        padding:19px;
+    }
+
+    .page{
+        padding:20px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     TRANG CHÍNH
+================================================== -->
+
+<div id="home">
+
+
+    <div class="title">
+        🔐 Trung tâm mở khóa
+    </div>
+
+
+    <div class="subtitle">
+        Chọn chức năng bạn muốn sử dụng
+    </div>
+
+
+    <!-- Ô 1 -->
+
+    <div
+        id="boxUID"
+        class="box"
+        onclick="openUID()"
+    >
+
+        <div class="icon">
+            🔓
+        </div>
+
+        <h2>
+            Mở khoá ban tổ đội
+        </h2>
+
+        <p>
+            Nhấn vào đây để nhập UID và xác nhận mở khoá.
+        </p>
+
+    </div>
+
+
+    <!-- Ô 2 -->
+
+    <div
+        id="boxZalo"
+        class="box"
+        onclick="openZaloPage()"
+    >
+
+        <div class="icon">
+            ♾️
+        </div>
+
+        <h2>
+            Mở ban acc vĩnh viễn
+        </h2>
+
+        <p>
+            Liên hệ Zalo để được hỗ trợ.
+        </p>
+
+    </div>
+
+
+    <!-- ==================================================
+         LIÊN HỆ
+    ================================================== -->
+
+    <div class="footer">
+
+
+        <div class="contact-title">
+            Liên hệ
+        </div>
+
+
+        <div class="contact-list">
+
+
+            <!-- ZALO -->
+
+            <button
+                class="contact-btn footer-zalo"
+                onclick="goZalo()"
+            >
+
+                <div class="contact-icon">
+                    💙
+                </div>
+
+                <div class="contact-info">
+
+                    <div class="contact-name">
+                        Zalo
+                    </div>
+
+                    <div class="contact-desc">
+                        Liên hệ trực tiếp
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- TIKTOK -->
+
+            <button
+                class="contact-btn footer-tiktok"
+                onclick="goTikTok()"
+            >
+
+                <div class="contact-icon">
+                    🎵
+                </div>
+
+                <div class="contact-info">
+
+                    <div class="contact-name">
+                        TikTok
+                    </div>
+
+                    <div class="contact-desc">
+                        Theo dõi mình trên TikTok
+                    </div>
+
+                </div>
+
+            </button>
+
+
+            <!-- FACEBOOK -->
+
+            <button
+                class="contact-btn footer-facebook"
+                onclick="goFacebook()"
+            >
+
+                <div class="contact-icon">
+                    📘
+                </div>
+
+                <div class="contact-info">
+
+                    <div class="contact-name">
+                        Facebook
+                    </div>
+
+                    <div class="contact-desc">
+                        Kết nối với mình
+                    </div>
+
+                </div>
+
+            </button>
+
+
+        </div>
+
+
+        <div class="made">
+            Made by Hung
+        </div>
+
+        <div class="copyright">
+            Copyright © Hùng
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     TRANG NHẬP UID
+================================================== -->
+
+<div
+    id="uidPage"
+    class="page"
+>
+
+
+    <h2>
+        🔓 Mở khoá ban tổ đội
+    </h2>
+
+
+    <p>
+        Nhập UID của tài khoản cần mở khoá.
+    </p>
+
+
+    <input
+        id="uid"
+        type="text"
+        inputmode="numeric"
+        placeholder="Nhập UID..."
+        autocomplete="off"
+    >
+
+
+    <button
+        class="confirm"
+        onclick="checkUID()"
+    >
+        Xác nhận mở khoá
+    </button>
+
+
+    <!-- KẾT QUẢ UID ĐẶC BIỆT -->
+
+    <div
+        id="accountResult"
+        class="account-result"
+    >
+
+        <div class="image-box">
+
+            <img
+                src="Screenshot_2026-08-19-17-22-09-10_c28519d624689b8d548e2809af584b0c.jpg"
+                alt="Ảnh tài khoản"
+            >
+
+        </div>
+
+
+        <button
+            class="account-confirm"
+            onclick="confirmAccount()"
+        >
+            ✓ Xác nhận mở khoá
+        </button>
+
+    </div>
+
+
+    <!-- UID KHÁC -->
+
+    <div
+        id="notFound"
+        class="not-found"
+    >
+
+        Dữ liệu không khả dụng.<br>
+
+        Vui lòng liên hệ Zalo.
+
+    </div>
+
+
+    <button
+        class="back"
+        onclick="home()"
+    >
+        ← Quay lại
+    </button>
+
+
+</div>
+
+
+<!-- ==================================================
+     TRANG MỞ BAN VĨNH VIỄN
+================================================== -->
+
+<div
+    id="zaloPage"
+    class="page"
+>
+
+
+    <h2>
+        ♾️ Mở ban acc vĩnh viễn
+    </h2>
+
+
+    <p>
+        Vui lòng liên hệ Zalo để được hỗ trợ.
+    </p>
+
+
+    <button
+        class="zalo"
+        onclick="goZalo()"
+    >
+        💙 Liên hệ Zalo
+    </button>
+
+
+    <button
+        class="back"
+        onclick="home()"
+    >
+        ← Quay lại
+    </button>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ==================================================
+     POPUP
+================================================== -->
+
+<div
+    id="popupBg"
+    class="popup-bg"
+    onclick="closePopup()"
+>
+</div>
+
+
+<div
+    id="popup"
+    class="popup"
+    style="display:none;"
+>
+
+
+    <div
+        id="popupIcon"
+        class="popup-icon"
+    >
+        ✓
+    </div>
+
+
+    <h3
+        id="popupTitle"
+    >
+        Đã mở khoá thành công!
+    </h3>
+
+
+    <p
+        id="popupText"
+    >
+        Yêu cầu đã được xác nhận.
+    </p>
+
+
+    <button
+        class="close"
+        onclick="closePopup()"
+    >
+        Đóng
+    </button>
+
+
+</div>
+
+
+
+<script>
+
+/* ==================================================
+   🔗 LINK MẠNG XÃ HỘI
+   CHỈ CẦN SỬA 3 DÒNG NÀY NẾU SAU NÀY ĐỔI LINK
+================================================== */
+
+const ZALO_LINK =
+    "https://zalo.me/0797178562";
+
+const TIKTOK_LINK =
+    "https://www.tiktok.com/@phhung.tt?_r=1&_t=ZS-990kc0sQzSy";
+
+const FACEBOOK_LINK =
+    "https://www.facebook.com/share/1be3HigUiR/";
+
+
+
+/* ==================================================
+   UID ĐƯỢC CẤP
+================================================== */
+
+const allowedUID =
+    "2377582791";
+
+
+
+/* ==================================================
+   MỞ TRANG UID
+================================================== */
+
+function openUID(){
+
+    const box =
+        document.getElementById("boxUID");
+
+    box.classList.add("opening");
+
+    setTimeout(function(){
+
+        document.getElementById("home")
+            .style.display = "none";
+
+        document.getElementById("uidPage")
+            .classList.add("show");
+
+        document.getElementById("uid")
+            .focus();
+
+    },550);
+
+}
+
+
+
+/* ==================================================
+   MỞ TRANG BAN VĨNH VIỄN
+================================================== */
+
+function openZaloPage(){
+
+    const box =
+        document.getElementById("boxZalo");
+
+    box.classList.add("opening");
+
+    setTimeout(function(){
+
+        document.getElementById("home")
+            .style.display = "none";
+
+        document.getElementById("zaloPage")
+            .classList.add("show");
+
+    },550);
+
+}
+
+
+
+/* ==================================================
+   KIỂM TRA UID
+================================================== */
+
+function checkUID(){
+
+    const uid =
+        document.getElementById("uid")
+        .value
+        .trim();
+
+
+    document.getElementById("accountResult")
+        .style.display = "none";
+
+    document.getElementById("notFound")
+        .style.display = "none";
+
+
+    /* Chưa nhập */
+
+    if(uid === ""){
+
+        showPopup(
+            "⚠️",
+            "Chưa nhập UID",
+            "Vui lòng nhập UID trước khi xác nhận."
+        );
+
+        return;
+    }
+
+
+    /* UID 2377582791 */
+
+    if(uid === allowedUID){
+
+        document.getElementById("accountResult")
+            .style.display = "block";
+
+        return;
+    }
+
+
+    /* UID khác */
+
+    document.getElementById("notFound")
+        .style.display = "block";
+
+}
+
+
+
+/* ==================================================
+   XÁC NHẬN MỞ KHÓA
+================================================== */
+
+function confirmAccount(){
+
+    showPopup(
+        "✓",
+        "Đã mở khoá thành công!",
+        "Tài khoản có UID 2377582791 đã được xác nhận mở khoá."
+    );
+
+}
+
+
+
+/* ==================================================
+   POPUP
+================================================== */
+
+function showPopup(
+    icon,
+    title,
+    text
+){
+
+    document.getElementById("popupIcon")
+        .innerHTML = icon;
+
+    document.getElementById("popupTitle")
+        .innerHTML = title;
+
+    document.getElementById("popupText")
+        .innerHTML = text;
+
+    document.getElementById("popupBg")
+        .style.display = "block";
+
+    document.getElementById("popup")
+        .style.display = "block";
+
+}
+
+
+function closePopup(){
+
+    document.getElementById("popupBg")
+        .style.display = "none";
+
+    document.getElementById("popup")
+        .style.display = "none";
+
+}
+
+
+
+/* ==================================================
+   QUAY VỀ TRANG CHÍNH
+================================================== */
+
+function home(){
+
+    document.getElementById("uidPage")
+        .classList.remove("show");
+
+    document.getElementById("zaloPage")
+        .classList.remove("show");
+
+    document.getElementById("accountResult")
+        .style.display = "none";
+
+    document.getElementById("notFound")
+        .style.display = "none";
+
+    document.getElementById("uid")
+        .value = "";
+
+    document.getElementById("boxUID")
+        .classList.remove("opening");
+
+    document.getElementById("boxZalo")
+        .classList.remove("opening");
+
+    document.getElementById("home")
+        .style.display = "block";
+
+}
+
+
+
+/* ==================================================
+   MẠNG XÃ HỘI
+==================================
